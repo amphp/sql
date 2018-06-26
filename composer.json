@@ -1,0 +1,26 @@
+{
+    "name": "amphp/sql",
+    "description": "Asynchronous SQL client for Amp.",
+    "keywords": [
+        "database",
+        "db",
+        "sql",
+        "asynchronous",
+        "async"
+    ],
+    "homepage": "http://amphp.org",
+    "license": "MIT",
+    "require": {
+        "amphp/amp": "^2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Amp\\Sql\\": "src"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.0"
+        }
+    }
+}
