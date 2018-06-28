@@ -2,31 +2,20 @@
 
 namespace Amp\Sql;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 
 interface Connection extends Link {
-    public function connect(): Promise;
-
     /**
-     * @return bool False if the connection has been closed.
+     * @param ConnectionConfig       $config
+     * @param CancellationToken|null $token
+     *
+     * @return Promise<Connection>
      */
-    public function isAlive(): bool;
+    public static function connect(ConnectionConfig $config, CancellationToken $token = null): Promise;
 
     /**
      * @return int Timestamp of the last time this connection was used.
      */
     public function lastUsedAt(): int;
-
-    public function close();
-
-    public function query(string $query): Promise;
-
-    public function transaction(int $isolation = Transaction::COMMITTED): Promise;
-
-    public function prepare(string $query): Promise;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function execute(string $sql, array $params = []): Promise;
 }

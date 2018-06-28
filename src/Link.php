@@ -8,7 +8,9 @@ interface Link extends Executor {
     /**
      * Starts a transaction on a single connection.
      *
-     * @return \Amp\Promise
+     * @param int $isolation Transaction isolation level.
+     *
+     * @return Promise<Transaction>
      */
-    public function transaction(): Promise;
+    public function transaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise;
 }

@@ -5,10 +5,10 @@ namespace Amp\Sql;
 use Amp\Promise;
 
 interface Transaction extends Executor, Operation {
-    const UNCOMMITTED  = 0;
-    const COMMITTED    = 1;
-    const REPEATABLE   = 2;
-    const SERIALIZABLE = 4;
+    const ISOLATION_UNCOMMITTED  = 0;
+    const ISOLATION_COMMITTED    = 1;
+    const ISOLATION_REPEATABLE   = 2;
+    const ISOLATION_SERIALIZABLE = 4;
 
     /**
      * @return int
@@ -47,7 +47,7 @@ interface Transaction extends Executor, Operation {
      *
      * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
      */
-    public function savepoint(string $identifier): Promise;
+    public function createSavepoint(string $identifier): Promise;
 
     /**
      * Rolls back to the savepoint with the given identifier.
@@ -69,5 +69,5 @@ interface Transaction extends Executor, Operation {
      *
      * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
      */
-    public function release(string $identifier): Promise;
+    public function releaseSavepoint(string $identifier): Promise;
 }

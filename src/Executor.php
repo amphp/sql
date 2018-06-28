@@ -8,22 +8,22 @@ interface Executor {
     /**
      * @param string $sql SQL query to execute.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult|\Amp\Sql\ResultSet>
+     * @return Promise<CommandResult|ResultSet>
      *
-     * @throws \Amp\Sql\FailureException If the operation fails due to unexpected condition.
-     * @throws \Amp\Sql\ConnectionException If the connection to the database is lost.
-     * @throws \Amp\Sql\QueryError If the operation fails due to an error in the query (such as a syntax error).
+     * @throws FailureException If the operation fails due to unexpected condition.
+     * @throws ConnectionException If the connection to the database is lost.
+     * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
      */
     public function query(string $sql): Promise;
 
     /**
      * @param string $sql SQL query to prepare.
      *
-     * @return \Amp\Promise<\Amp\Mysql\Statement>
+     * @return Promise<Statement>
      *
-     * @throws \Amp\Sql\FailureException If the operation fails due to unexpected condition.
-     * @throws \Amp\Sql\ConnectionException If the connection to the database is lost.
-     * @throws \Amp\Sql\QueryError If the operation fails due to an error in the query (such as a syntax error).
+     * @throws FailureException If the operation fails due to unexpected condition.
+     * @throws ConnectionException If the connection to the database is lost.
+     * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
      */
     public function prepare(string $sql): Promise;
 
@@ -31,11 +31,11 @@ interface Executor {
      * @param string $sql SQL query to prepare and execute.
      * @param mixed[] $params Query parameters.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult|\Amp\Sql\ResultSet>
+     * @return Promise<CommandResult|ResultSet>
      *
-     * @throws \Amp\Sql\FailureException If the operation fails due to unexpected condition.
-     * @throws \Amp\Sql\ConnectionException If the connection to the database is lost.
-     * @throws \Amp\Sql\QueryError If the operation fails due to an error in the query (such as a syntax error).
+     * @throws FailureException If the operation fails due to unexpected condition.
+     * @throws ConnectionException If the connection to the database is lost.
+     * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
      */
     public function execute(string $sql, array $params = []): Promise;
 
