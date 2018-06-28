@@ -5,6 +5,8 @@ namespace Amp\Sql;
 use Amp\Promise;
 
 interface Connection extends Link {
+    public function connect(): Promise;
+
     /**
      * @return bool False if the connection has been closed.
      */
