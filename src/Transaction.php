@@ -23,18 +23,18 @@ interface Transaction extends Executor, Operation {
     /**
      * Commits the transaction and makes it inactive.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult>
+     * @return Promise<CommandResult>
      *
-     * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
+     * @throws TransactionError If the transaction has been committed or rolled back.
      */
     public function commit(): Promise;
 
     /**
      * Rolls back the transaction and makes it inactive.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult>
+     * @return Promise<CommandResult>
      *
-     * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
+     * @throws TransactionError If the transaction has been committed or rolled back.
      */
     public function rollback(): Promise;
 
@@ -43,9 +43,9 @@ interface Transaction extends Executor, Operation {
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult>
+     * @return Promise<CommandResult>
      *
-     * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
+     * @throws TransactionError If the transaction has been committed or rolled back.
      */
     public function createSavepoint(string $identifier): Promise;
 
@@ -54,9 +54,9 @@ interface Transaction extends Executor, Operation {
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult>
+     * @return Promise<CommandResult>
      *
-     * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
+     * @throws TransactionError If the transaction has been committed or rolled back.
      */
     public function rollbackTo(string $identifier): Promise;
 
@@ -65,9 +65,9 @@ interface Transaction extends Executor, Operation {
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return \Amp\Promise<\Amp\Sql\CommandResult>
+     * @return Promise<CommandResult>
      *
-     * @throws \Amp\Sql\TransactionError If the transaction has been committed or rolled back.
+     * @throws TransactionError If the transaction has been committed or rolled back.
      */
     public function releaseSavepoint(string $identifier): Promise;
 }

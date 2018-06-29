@@ -8,7 +8,7 @@ interface Statement {
     /**
      * @param mixed[] $params
      *
-     * @return \Amp\Promise<CommandResult|ResultSet>
+     * @return Promise<CommandResult|ResultSet>
      */
     public function execute(array $params = []): Promise;
 
