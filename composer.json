@@ -13,6 +13,9 @@
     "require": {
         "amphp/amp": "^2"
     },
+    "require-dev": {
+        "amphp/php-cs-fixer-config": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Amp\\Sql\\": "src"
@@ -22,5 +25,13 @@
         "platform": {
             "php": "7.0.0"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs",
+            "@test"
+        ],
+        "cs": "php-cs-fixer fix -v --diff --dry-run",
+        "cs-fix": "php-cs-fixer fix -v --diff"
     }
 }
