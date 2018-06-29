@@ -28,15 +28,6 @@ abstract class AbstractPool implements Pool
     /** @var \SplObjectStorage */
     private $connections;
 
-    /** @var Promise|null */
-    private $promise;
-
-    /** @var Deferred|null */
-    private $deferred;
-
-    /** @var int Number of pending connections. */
-    private $pending = 0;
-
     /** @var bool */
     private $closed = false;
 
@@ -51,6 +42,15 @@ abstract class AbstractPool implements Pool
 
     /** @var int */
     private $lastUsedAt;
+
+    /** @var Promise|null */
+    protected $promise;
+
+    /** @var Deferred|null */
+    protected $deferred;
+
+    /** @var int Number of pending connections. */
+    protected $pending = 0;
 
     /**
      * @param ConnectionConfig $config
