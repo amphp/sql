@@ -10,7 +10,7 @@ class QueryErrorTest extends TestCase
     /**
      * @test
      */
-    public function it_passed_query_along()
+    public function testItPassesQueryAlong()
     {
         $error = new QueryError('error', 'SELECT * FROM foo');
 
