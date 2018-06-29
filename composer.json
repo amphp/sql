@@ -14,11 +14,18 @@
         "amphp/amp": "^2"
     },
     "require-dev": {
-        "amphp/php-cs-fixer-config": "dev-master"
+        "amphp/php-cs-fixer-config": "dev-master",
+        "amphp/phpunit-util": "^1",
+        "phpunit/phpunit": "^6"
     },
     "autoload": {
         "psr-4": {
             "Amp\\Sql\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Amp\\Sql\\Test\\": "test"
         }
     },
     "config": {
