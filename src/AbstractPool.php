@@ -41,7 +41,7 @@ abstract class AbstractPool implements Pool
     private $pending = 0;
 
     /** @var int */
-    private $idleTimeout = self::DEFAULT_IDLE_TIMEOUT;
+    private $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT;
 
     /** @var string */
     private $timeoutWatcher;
@@ -58,7 +58,7 @@ abstract class AbstractPool implements Pool
 
     public function __construct(
         ConnectionConfig $config,
-        int $maxConnections = self::DEFAULT_MAX_CONNECTIONS,
+        int $maxConnections = Pool::DEFAULT_MAX_CONNECTIONS,
         Connector $connector = null
     ) {
         $this->connector = $connector ?? $this->createDefaultConnector();
