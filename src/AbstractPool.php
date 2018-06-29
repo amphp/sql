@@ -283,11 +283,11 @@ abstract class AbstractPool implements Pool
         return $statement;
     }
 
-    abstract protected function defaultConnector(): Connector;
-
-    abstract protected function newPooledStatement(Pool $pool, Statement $statement, callable $prepare): Statement;
-
     abstract protected function pop(): \Generator;
 
     abstract protected function push(Connection $connection);
+
+    abstract protected function defaultConnector(): Connector;
+
+    abstract protected function newPooledStatement(Pool $pool, Statement $statement, callable $prepare): Statement;
 }
