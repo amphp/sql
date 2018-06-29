@@ -14,34 +14,34 @@ abstract class AbstractPool implements Pool
     use CallableMaker;
 
     /** @var Connector */
-    private $connector;
+    protected $connector;
 
     /** @var ConnectionConfig */
-    private $config;
+    protected $config;
 
     /** @var int */
-    private $maxConnections;
+    protected $maxConnections;
 
     /** @var \SplQueue */
-    private $idle;
+    protected $idle;
 
     /** @var \SplObjectStorage */
-    private $connections;
+    protected $connections;
 
     /** @var bool */
-    private $closed = false;
+    protected $closed = false;
 
     /** @var string */
-    private $timeoutWatcher;
+    protected $timeoutWatcher;
 
     /** @var int */
-    private $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT;
+    protected $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT;
 
     /** @var callable */
-    private $prepare;
+    protected $prepare;
 
     /** @var int */
-    private $lastUsedAt;
+    protected $lastUsedAt;
 
     /** @var Promise|null */
     protected $promise;
@@ -256,7 +256,7 @@ abstract class AbstractPool implements Pool
         $this->idleTimeout = $timeout;
     }
 
-    private function doPrepare(string $sql): \Generator
+    protected function doPrepare(string $sql): \Generator
     {
         /** @var Connection $connection */
         $connection = yield from $this->pop();
