@@ -21,7 +21,7 @@ class QueryError extends \Error
 
     public function __toString(): string
     {
-        if ($this->query == "") {
+        if ($this->query === "") {
             return parent::__toString();
         }
 
