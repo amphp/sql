@@ -47,6 +47,11 @@ interface Executor {
     public function isAlive(): bool;
 
     /**
+     * @return int Timestamp of the last time this connection was used.
+     */
+    public function lastUsedAt(): int;
+
+    /**
      * Closes the executor. No further queries may be performed.
      */
     public function close();

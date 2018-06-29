@@ -2,6 +2,7 @@
 
 namespace Amp\Sql;
 
-interface ConnectionConfig {
+interface ConnectionConfig
+{
     public function connectionString(): string;
 }
