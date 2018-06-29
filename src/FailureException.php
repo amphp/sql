@@ -2,5 +2,6 @@
 
 namespace Amp\Sql;
 
-class FailureException extends \Exception {
+class FailureException extends \Exception
+{
 }

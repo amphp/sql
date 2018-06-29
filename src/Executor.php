@@ -4,7 +4,8 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Executor {
+interface Executor
+{
     /**
      * @param string $sql SQL query to execute.
      *

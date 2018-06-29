@@ -2,7 +2,8 @@
 
 namespace Amp\Sql;
 
-interface Operation {
+interface Operation
+{
     /**
      * @param callable $onDestruct Callback executed when the operation completes or the object is destroyed.
      */

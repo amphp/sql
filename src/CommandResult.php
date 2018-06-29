@@ -2,7 +2,8 @@
 
 namespace Amp\Sql;
 
-interface CommandResult {
+interface CommandResult
+{
     /**
      * Returns the number of rows affected by the query.
      *

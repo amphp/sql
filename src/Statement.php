@@ -4,7 +4,8 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Statement {
+interface Statement
+{
     /**
      * @param mixed[] $params
      *

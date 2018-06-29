@@ -4,7 +4,8 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Link extends Executor {
+interface Link extends Executor
+{
     /**
      * Starts a transaction on a single connection.
      *

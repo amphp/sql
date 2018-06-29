@@ -4,7 +4,8 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Pool extends Link {
+interface Pool extends Link
+{
     const DEFAULT_MAX_CONNECTIONS = 100;
     const DEFAULT_IDLE_TIMEOUT = 60;
 

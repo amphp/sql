@@ -2,5 +2,6 @@
 
 namespace Amp\Sql;
 
-class TransactionError extends \Error {
+class TransactionError extends \Error
+{
 }

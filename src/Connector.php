@@ -4,7 +4,8 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Connector {
+interface Connector
+{
     /**
      * @param ConnectionConfig $config
      *
