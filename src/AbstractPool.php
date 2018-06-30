@@ -72,7 +72,7 @@ abstract class AbstractPool implements Pool
 
         $this->connections = $connections = new \SplObjectStorage;
         $this->idle = $idle = new \SplQueue;
-        $this->prepare = coroutine($this->callableFromInstanceMethod("doPrepare"));
+        $this->prepare = coroutine($this->callableFromInstanceMethod("createStatement"));
 
         $idleTimeout = &$this->idleTimeout;
 
@@ -338,28 +338,34 @@ abstract class AbstractPool implements Pool
     public function prepare(string $sql): Promise
     {
         return call(function () use ($sql) {
-            $connection = yield from $this->pop();
-            \assert($connection instanceof Link);
-
-            try {
-                $statement = yield $connection->prepare($sql);
-                \assert($statement instanceof Statement);
-
-                \assert(
-                    $statement instanceof Operation,
-                    Statement::class . " instances returned from connections must implement " . Operation::class
-                );
-            } catch (\Throwable $exception) {
-                $this->push($connection);
-                throw $exception;
-            }
-
-            $statement->onDestruct(function () use ($connection) {
-                $this->push($connection);
-            });
-
+            $statement = yield from $this->createStatement($sql);
             return new PooledStatement($this, $statement, $this->prepare);
         });
+    }
+
+    private function createStatement(string $sql): \Generator
+    {
+        $connection = yield from $this->pop();
+        \assert($connection instanceof Link);
+
+        try {
+            $statement = yield $connection->prepare($sql);
+            \assert($statement instanceof Statement);
+
+            \assert(
+                $statement instanceof Operation,
+                Statement::class . " instances returned from connections must implement " . Operation::class
+            );
+        } catch (\Throwable $exception) {
+            $this->push($connection);
+            throw $exception;
+        }
+
+        $statement->onDestruct(function () use ($connection) {
+            $this->push($connection);
+        });
+
+        return $statement;
     }
 
     /**
