@@ -6,7 +6,7 @@ use Amp\Loop;
 use Amp\Promise;
 use function Amp\call;
 
-final class PooledStatement implements Statement
+abstract class PooledStatement implements Statement
 {
     /** @var \Amp\Sql\Pool */
     private $pool;
@@ -25,6 +25,21 @@ final class PooledStatement implements Statement
 
     /** @var callable */
     private $prepare;
+
+    /**
+     * @param ResultSet $resultSet
+     * @param callable  $release
+     *
+     * @return ResultSet
+     */
+    abstract protected function createResultSet(ResultSet $resultSet, callable $release): ResultSet;
+
+    /**
+     * Perform any necessary operation on the given Statement object before execute() is invoked.
+     *
+     * @param Statement $statement
+     */
+    abstract protected function prepare(Statement $statement);
 
     /**
      * @param Pool $pool Pool used to re-create the statement if the original closes.
@@ -91,8 +106,8 @@ final class PooledStatement implements Statement
                 throw $exception;
             }
 
-            if ($result instanceof Operation) {
-                $result->onDestruct(function () use ($statement) {
+            if ($result instanceof ResultSet) {
+                $result = $this->createResultSet($result, function () use ($statement) {
                     $this->push($statement);
                 });
             } else {

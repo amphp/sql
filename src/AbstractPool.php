@@ -56,6 +56,48 @@ abstract class AbstractPool implements Pool
      */
     abstract protected function createDefaultConnector(): Connector;
 
+    /**
+     * Creates a ResultSet of the appropriate type using the ResultSet object returned by the Link object and the
+     * given release callable.
+     *
+     * @param ResultSet $resultSet
+     * @param callable  $release
+     *
+     * @return ResultSet
+     */
+    abstract protected function createResultSet(ResultSet $resultSet, callable $release): ResultSet;
+
+    /**
+     * Creates a Statement of the appropriate type using the Statement object returned by the Link object and the
+     * given release callable.
+     *
+     * @param Statement $statement
+     * @param callable  $release
+     *
+     * @return Statement
+     */
+    abstract protected function createStatement(Statement $statement, callable $release): Statement;
+
+    /**
+     * @param Pool      $pool
+     * @param Statement $statement
+     * @param callable  $prepare
+     *
+     * @return PooledStatement
+     */
+    abstract protected function createPooledStatement(Pool $pool, Statement $statement, callable $prepare): PooledStatement;
+
+    /**
+     * Creates a Transaction of the appropriate type using the Transaction object returned by the Link object and the
+     * given release callable.
+     *
+     * @param Transaction $transaction
+     * @param callable    $release
+     *
+     * @return Transaction
+     */
+    abstract protected function createTransaction(Transaction $transaction, callable $release): Transaction;
+
     public function __construct(
         ConnectionConfig $config,
         int $maxConnections = Pool::DEFAULT_MAX_CONNECTIONS,
@@ -72,7 +114,7 @@ abstract class AbstractPool implements Pool
 
         $this->connections = $connections = new \SplObjectStorage;
         $this->idle = $idle = new \SplQueue;
-        $this->prepare = coroutine($this->callableFromInstanceMethod("createStatement"));
+        $this->prepare = coroutine($this->callableFromInstanceMethod("prepareStatement"));
 
         $idleTimeout = &$this->idleTimeout;
 
@@ -290,8 +332,8 @@ abstract class AbstractPool implements Pool
                 throw $exception;
             }
 
-            if ($result instanceof Operation) {
-                $result->onDestruct(function () use ($connection) {
+            if ($result instanceof ResultSet) {
+                $result = $this->createResultSet($result, function () use ($connection) {
                     $this->push($connection);
                 });
             } else {
@@ -318,8 +360,8 @@ abstract class AbstractPool implements Pool
                 throw $exception;
             }
 
-            if ($result instanceof Operation) {
-                $result->onDestruct(function () use ($connection) {
+            if ($result instanceof ResultSet) {
+                $result = $this->createResultSet($result, function () use ($connection) {
                     $this->push($connection);
                 });
             } else {
@@ -338,12 +380,12 @@ abstract class AbstractPool implements Pool
     public function prepare(string $sql): Promise
     {
         return call(function () use ($sql) {
-            $statement = yield from $this->createStatement($sql);
-            return new PooledStatement($this, $statement, $this->prepare);
+            $statement = yield from $this->prepareStatement($sql);
+            return $this->createPooledStatement($this, $statement, $this->prepare);
         });
     }
 
-    private function createStatement(string $sql): \Generator
+    private function prepareStatement(string $sql): \Generator
     {
         $connection = yield from $this->pop();
         \assert($connection instanceof Link);
@@ -351,21 +393,14 @@ abstract class AbstractPool implements Pool
         try {
             $statement = yield $connection->prepare($sql);
             \assert($statement instanceof Statement);
-
-            \assert(
-                $statement instanceof Operation,
-                Statement::class . " instances returned from connections must implement " . Operation::class
-            );
         } catch (\Throwable $exception) {
             $this->push($connection);
             throw $exception;
         }
 
-        $statement->onDestruct(function () use ($connection) {
+        return $this->createStatement($statement, function () use ($connection) {
             $this->push($connection);
         });
-
-        return $statement;
     }
 
     /**
@@ -385,11 +420,9 @@ abstract class AbstractPool implements Pool
                 throw $exception;
             }
 
-            $transaction->onDestruct(function () use ($connection) {
+            return $this->createTransaction($transaction, function () use ($connection) {
                 $this->push($connection);
             });
-
-            return $transaction;
         });
     }
 }

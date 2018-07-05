@@ -4,7 +4,7 @@ namespace Amp\Sql;
 
 use Amp\Promise;
 
-interface Transaction extends Executor, Operation
+interface Transaction extends Executor
 {
     const ISOLATION_UNCOMMITTED  = 0;
     const ISOLATION_COMMITTED    = 1;
