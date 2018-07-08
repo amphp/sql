@@ -83,9 +83,9 @@ abstract class AbstractPool implements Pool
      * @param Statement $statement
      * @param callable  $prepare
      *
-     * @return PooledStatement
+     * @return StatementPool
      */
-    abstract protected function createPooledStatement(Pool $pool, Statement $statement, callable $prepare): PooledStatement;
+    abstract protected function createStatementPool(Pool $pool, Statement $statement, callable $prepare): StatementPool;
 
     /**
      * Creates a Transaction of the appropriate type using the Transaction object returned by the Link object and the
@@ -381,7 +381,7 @@ abstract class AbstractPool implements Pool
     {
         return call(function () use ($sql) {
             $statement = yield from $this->prepareStatement($sql);
-            return $this->createPooledStatement($this, $statement, $this->prepare);
+            return $this->createStatementPool($this, $statement, $this->prepare);
         });
     }
 

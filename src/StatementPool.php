@@ -6,7 +6,7 @@ use Amp\Loop;
 use Amp\Promise;
 use function Amp\call;
 
-abstract class PooledStatement implements Statement
+abstract class StatementPool implements Statement
 {
     /** @var \Amp\Sql\Pool */
     private $pool;
