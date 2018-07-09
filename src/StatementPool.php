@@ -35,13 +35,6 @@ abstract class StatementPool implements Statement
     abstract protected function createResultSet(ResultSet $resultSet, callable $release): ResultSet;
 
     /**
-     * Perform any necessary operation on the given Statement object before execute() is invoked.
-     *
-     * @param Statement $statement
-     */
-    abstract protected function prepare(Statement $statement);
-
-    /**
      * @param Pool $pool Pool used to re-create the statement if the original closes.
      * @param Statement $statement Original prepared statement returned from the Link.
      * @param callable $prepare Callable that returns a new prepared statement.
@@ -90,14 +83,8 @@ abstract class StatementPool implements Statement
         $this->lastUsedAt = \time();
 
         return call(function () use ($params) {
-            if (!$this->statements->isEmpty()) {
-                do {
-                    /** @var Statement $statement */
-                    $statement = $this->statements->shift();
-                } while (!$statement->isAlive() && !$this->statements->isEmpty());
-            } else {
-                $statement = yield ($this->prepare)($this->sql);
-            }
+            $statement = yield from $this->pop();
+            \assert($statement instanceof Statement);
 
             try {
                 $result = yield $statement->execute($params);
@@ -124,7 +111,7 @@ abstract class StatementPool implements Statement
      *
      * @param Statement $statement
      */
-    private function push(Statement $statement)
+    protected function push(Statement $statement)
     {
         $maxConnections = $this->pool->getMaxConnections();
 
@@ -139,6 +126,24 @@ abstract class StatementPool implements Statement
         $this->statements->push($statement);
     }
 
+    /**
+     * Coroutine returning a Statement object from the pool or creating a new Statement.
+     *
+     * @return \Generator
+     */
+    protected function pop(): \Generator
+    {
+        while (!$this->statements->isEmpty()) {
+            /** @var Statement $statement */
+            $statement = $this->statements->shift();
+
+            if ($statement->isAlive()) {
+                return $statement;
+            }
+        }
+
+        return yield ($this->prepare)($this->sql);
+    }
 
     /** {@inheritdoc} */
     public function isAlive(): bool
