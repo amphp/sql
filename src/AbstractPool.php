@@ -41,7 +41,7 @@ abstract class AbstractPool implements Pool
     private $pending = 0;
 
     /** @var int */
-    private $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT;
+    private $idleTimeout;
 
     /** @var string */
     private $timeoutWatcher;
@@ -98,14 +98,26 @@ abstract class AbstractPool implements Pool
      */
     abstract protected function createTransaction(Transaction $transaction, callable $release): Transaction;
 
+    /**
+     * @param ConnectionConfig $config
+     * @param int              $maxConnections Maximum number of active connections in the pool.
+     * @param int              $idleTimeout Number of seconds until idle connections are removed from the pool.
+     * @param Connector|null   $connector
+     */
     public function __construct(
         ConnectionConfig $config,
         int $maxConnections = Pool::DEFAULT_MAX_CONNECTIONS,
+        int $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT,
         Connector $connector = null
     ) {
         $this->connector = $connector ?? $this->createDefaultConnector();
 
         $this->connectionConfig = $config;
+
+        $this->idleTimeout = $idleTimeout;
+        if ($this->idleTimeout < 1) {
+            throw new \Error("The idle timeout must be 1 or greater");
+        }
 
         $this->maxConnections = $maxConnections;
         if ($this->maxConnections < 1) {
@@ -146,15 +158,6 @@ abstract class AbstractPool implements Pool
     public function getIdleTimeout(): int
     {
         return $this->idleTimeout;
-    }
-
-    public function setIdleTimeout(int $timeout)
-    {
-        if ($timeout < 1) {
-            throw new \Error("Timeout must be greater than or equal to 1");
-        }
-
-        $this->idleTimeout = $timeout;
     }
 
     public function lastUsedAt(): int

@@ -33,9 +33,4 @@ interface Pool extends Link
      * @return int Number of seconds a connection may remain idle before it is automatically closed.
      */
     public function getIdleTimeout(): int;
-
-    /**
-     * @param int $timeout Number of seconds a connection may remain idle before it is automatically closed.
-     */
-    public function setIdleTimeout(int $timeout);
 }
