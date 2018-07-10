@@ -54,8 +54,8 @@ abstract class StatementPool implements Statement
             $idleTimeout = ((int) ($pool->getIdleTimeout() / 10)) ?: 1;
 
             while (!$statements->isEmpty()) {
-                /** @var Statement $statement */
                 $statement = $statements->bottom();
+                \assert($statement instanceof Statement);
 
                 if ($statement->lastUsedAt() + $idleTimeout > $now) {
                     return;
@@ -134,15 +134,17 @@ abstract class StatementPool implements Statement
     protected function pop(): \Generator
     {
         while (!$this->statements->isEmpty()) {
-            /** @var Statement $statement */
             $statement = $this->statements->shift();
+            \assert($statement instanceof Statement);
 
             if ($statement->isAlive()) {
                 return $statement;
             }
         }
 
-        return yield ($this->prepare)($this->sql);
+        $statement = yield ($this->prepare)($this->sql);
+        \assert($statement instanceof Statement);
+        return $statement;
     }
 
     /** {@inheritdoc} */
