@@ -4,6 +4,13 @@ namespace Amp\Sql;
 
 abstract class ConnectionConfig
 {
+    const KEY_MAP = [
+        'username' => 'user',
+        'pass' => 'password',
+        'database' => 'db',
+        'dbname' => 'db',
+    ];
+
     /** @var string */
     private $host;
 
@@ -23,10 +30,11 @@ abstract class ConnectionConfig
      * Parses a connection string into an array of keys and values given.
      *
      * @param string $connectionString
+     * @param string[] $keymap Map of alternative key names to canonical key names.
      *
      * @return array
      */
-    protected static function parseConnectionString(string $connectionString): array
+    protected static function parseConnectionString(string $connectionString, array $keymap = self::KEY_MAP): array
     {
         $values = [];
 
@@ -38,6 +46,11 @@ abstract class ConnectionConfig
 
         foreach ($params as $param) {
             list($key, $value) = \array_map("trim", \explode("=", $param, 2) + [1 => null]);
+
+            if (isset($keymap[$key])) {
+                $key = $keymap[$key];
+            }
+
             $values[$key] = $value;
         }
 
@@ -143,5 +156,4 @@ abstract class ConnectionConfig
         $new->database = $database;
         return $new;
     }
-
 }
