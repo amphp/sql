@@ -66,28 +66,6 @@ abstract class ConnectionConfig
         $this->database = $database;
     }
 
-    public function getConnectionString(): string
-    {
-        $chunks = [
-            "host=" . $this->host,
-            "port=" . $this->port,
-        ];
-
-        if ($this->user !== null) {
-            $chunks[] = "user=" . $this->user;
-        }
-
-        if ($this->password !== null) {
-            $chunks[] = "password=" . $this->password;
-        }
-
-        if ($this->database !== null) {
-            $chunks[] = "db=" . $this->database;
-        }
-
-        return \implode(" ", $chunks);
-    }
-
     final public function getHost(): string
     {
         return $this->host;
