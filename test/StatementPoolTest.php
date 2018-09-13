@@ -25,7 +25,7 @@ class StatementPoolTest extends TestCase
                 ->willReturn(true);
             $statement->method('getQuery')
                 ->willReturn('SELECT 1');
-            $statement->method('lastUsedAt')
+            $statement->method('getLastUsedAt')
                 ->willReturn(\time());
             $statement->expects($this->once())
                 ->method('execute');
@@ -61,7 +61,7 @@ class StatementPoolTest extends TestCase
                 ->willReturn(true);
             $statement->method('getQuery')
                 ->willReturn('SELECT 1');
-            $statement->method('lastUsedAt')
+            $statement->method('getLastUsedAt')
                 ->willReturn(\time());
             $statement->expects($this->once())
                 ->method('execute');

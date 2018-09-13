@@ -34,7 +34,7 @@ class AbstractPoolTest extends TestCase
             $connector->method('connect')
                 ->willReturnCallback(function () use ($now): Promise {
                     $link = $this->createMock(Link::class);
-                    $link->method('lastUsedAt')
+                    $link->method('getLastUsedAt')
                         ->willReturn($now);
 
                     $link->method('isAlive')
