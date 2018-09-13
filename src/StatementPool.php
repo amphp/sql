@@ -57,7 +57,7 @@ abstract class StatementPool implements Statement
                 $statement = $statements->bottom();
                 \assert($statement instanceof Statement);
 
-                if ($statement->lastUsedAt() + $idleTimeout > $now) {
+                if ($statement->getLastUsedAt() + $idleTimeout > $now) {
                     return;
                 }
 
@@ -113,7 +113,7 @@ abstract class StatementPool implements Statement
      */
     protected function push(Statement $statement)
     {
-        $maxConnections = $this->pool->getMaxConnections();
+        $maxConnections = $this->pool->getConnectionLimit();
 
         if ($this->statements->count() > ($maxConnections / 10)) {
             return;
@@ -160,7 +160,7 @@ abstract class StatementPool implements Statement
     }
 
     /** {@inheritdoc} */
-    public function lastUsedAt(): int
+    public function getLastUsedAt(): int
     {
         return $this->lastUsedAt;
     }

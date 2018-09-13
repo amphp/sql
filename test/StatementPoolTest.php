@@ -36,14 +36,14 @@ class StatementPoolTest extends TestCase
                 ->getMockForAbstractClass();
 
             $this->assertTrue($statementPool->isAlive());
-            $this->assertSame(\time(), $statementPool->lastUsedAt());
+            $this->assertSame(\time(), $statementPool->getLastUsedAt());
 
             yield new Delayed(1500); // Give timeout watcher enough time to execute.
 
             $statementPool->execute();
 
             $this->assertTrue($statementPool->isAlive());
-            $this->assertSame(\time(), $statementPool->lastUsedAt());
+            $this->assertSame(\time(), $statementPool->getLastUsedAt());
         });
     }
 
@@ -72,7 +72,7 @@ class StatementPoolTest extends TestCase
                 ->getMockForAbstractClass();
 
             $this->assertTrue($statementPool->isAlive());
-            $this->assertSame(\time(), $statementPool->lastUsedAt());
+            $this->assertSame(\time(), $statementPool->getLastUsedAt());
 
             $statementPool->execute();
 
@@ -81,7 +81,7 @@ class StatementPoolTest extends TestCase
             $statementPool->execute();
 
             $this->assertTrue($statementPool->isAlive());
-            $this->assertSame(\time(), $statementPool->lastUsedAt());
+            $this->assertSame(\time(), $statementPool->getLastUsedAt());
         });
     }
 }

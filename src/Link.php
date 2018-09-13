@@ -13,5 +13,5 @@ interface Link extends Executor
      *
      * @return Promise<Transaction>
      */
-    public function transaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise;
+    public function beginTransaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise;
 }

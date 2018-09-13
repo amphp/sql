@@ -123,13 +123,13 @@ abstract class PooledTransaction implements Transaction
         return $this->transaction && $this->transaction->isAlive();
     }
 
-    public function lastUsedAt(): int
+    public function getLastUsedAt(): int
     {
         if (!$this->transaction) {
             throw new TransactionError("The transaction has been committed or rolled back");
         }
 
-        return $this->transaction->lastUsedAt();
+        return $this->transaction->getLastUsedAt();
     }
 
     public function close()

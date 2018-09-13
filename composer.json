@@ -11,6 +11,7 @@
     "homepage": "http://amphp.org",
     "license": "MIT",
     "require": {
+        "php": ">=7",
         "amphp/amp": "^2"
     },
     "require-dev": {

@@ -9,7 +9,7 @@ class PooledResultSet implements ResultSet
     /** @var ResultSet */
     private $result;
 
-    /** @var callable|null */
+    /** @var callable */
     private $release;
 
     public function __construct(ResultSet $result, callable $release)

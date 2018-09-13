@@ -13,6 +13,9 @@ abstract class AbstractPool implements Pool
 {
     use CallableMaker;
 
+    const DEFAULT_MAX_CONNECTIONS = 100;
+    const DEFAULT_IDLE_TIMEOUT = 60;
+
     /** @var Connector */
     private $connector;
 
@@ -28,10 +31,10 @@ abstract class AbstractPool implements Pool
     /** @var \SplObjectStorage */
     private $connections;
 
-    /** @var \Amp\Promise|null */
+    /** @var Promise|null */
     private $promise;
 
-    /** @var \Amp\Deferred|null */
+    /** @var Deferred|null */
     private $deferred;
 
     /** @var callable */
@@ -106,8 +109,8 @@ abstract class AbstractPool implements Pool
      */
     public function __construct(
         ConnectionConfig $config,
-        int $maxConnections = Pool::DEFAULT_MAX_CONNECTIONS,
-        int $idleTimeout = Pool::DEFAULT_IDLE_TIMEOUT,
+        int $maxConnections = self::DEFAULT_MAX_CONNECTIONS,
+        int $idleTimeout = self::DEFAULT_IDLE_TIMEOUT,
         Connector $connector = null
     ) {
         $this->connector = $connector ?? $this->createDefaultConnector();
@@ -136,7 +139,7 @@ abstract class AbstractPool implements Pool
                 $connection = $idle->bottom();
                 \assert($connection instanceof Link);
 
-                if ($connection->lastUsedAt() + $idleTimeout > $now) {
+                if ($connection->getLastUsedAt() + $idleTimeout > $now) {
                     return;
                 }
 
@@ -160,7 +163,7 @@ abstract class AbstractPool implements Pool
         return $this->idleTimeout;
     }
 
-    public function lastUsedAt(): int
+    public function getLastUsedAt(): int
     {
         // Simple implementation... can be improved if needed.
 
@@ -168,7 +171,7 @@ abstract class AbstractPool implements Pool
 
         foreach ($this->connections as $connection) {
             \assert($connection instanceof Link);
-            if (($lastUsedAt = $connection->lastUsedAt()) > $time) {
+            if (($lastUsedAt = $connection->getLastUsedAt()) > $time) {
                 $time = $lastUsedAt;
             }
         }
@@ -229,7 +232,7 @@ abstract class AbstractPool implements Pool
     /**
      * {@inheritdoc}
      */
-    public function getMaxConnections(): int
+    public function getConnectionLimit(): int
     {
         return $this->maxConnections;
     }
@@ -248,14 +251,14 @@ abstract class AbstractPool implements Pool
             throw new \Error("The pool has been closed");
         }
 
-        while ($this->promise !== null && $this->connections->count() + $this->pending >= $this->getMaxConnections()) {
+        while ($this->promise !== null && $this->connections->count() + $this->pending >= $this->getConnectionLimit()) {
             yield $this->promise; // Prevent simultaneous connection creation when connection count is at maximum - 1.
         }
 
         do {
             // While loop to ensure an idle connection is available after promises below are resolved.
             while ($this->idle->isEmpty()) {
-                if ($this->connections->count() + $this->pending < $this->getMaxConnections()) {
+                if ($this->connections->count() + $this->pending < $this->getConnectionLimit()) {
                     // Max connection count has not been reached, so open another connection.
                     ++$this->pending;
                     try {
@@ -409,14 +412,14 @@ abstract class AbstractPool implements Pool
     /**
      * {@inheritdoc}
      */
-    public function transaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise
+    public function beginTransaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise
     {
         return call(function () use ($isolation) {
             $connection = yield from $this->pop();
             \assert($connection instanceof Link);
 
             try {
-                $transaction = yield $connection->transaction($isolation);
+                $transaction = yield $connection->beginTransaction($isolation);
                 \assert($transaction instanceof Transaction);
             } catch (\Throwable $exception) {
                 $this->push($connection);

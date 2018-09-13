@@ -74,8 +74,8 @@ abstract class PooledStatement implements Statement
         return $this->statement->getQuery();
     }
 
-    public function lastUsedAt(): int
+    public function getLastUsedAt(): int
     {
-        return $this->statement->lastUsedAt();
+        return $this->statement->getLastUsedAt();
     }
 }

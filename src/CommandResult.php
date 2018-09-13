@@ -9,5 +9,5 @@ interface CommandResult
      *
      * @return int
      */
-    public function affectedRows(): int;
+    public function getAffectedRowCount(): int;
 }

@@ -6,9 +6,6 @@ use Amp\Promise;
 
 interface Pool extends Link
 {
-    const DEFAULT_MAX_CONNECTIONS = 100;
-    const DEFAULT_IDLE_TIMEOUT = 60;
-
     /**
      * @return Promise<Link>
      */
@@ -27,7 +24,7 @@ interface Pool extends Link
     /**
      * @return int Maximum number of connections this pool will create.
      */
-    public function getMaxConnections(): int;
+    public function getConnectionLimit(): int;
 
     /**
      * @return int Number of seconds a connection may remain idle before it is automatically closed.
