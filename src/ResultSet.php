@@ -16,5 +16,5 @@ interface ResultSet extends Iterator
      *
      * @param int $type Next row fetch type. Use the FETCH_* constants provided by this interface.
      */
-    public function advance(int $type = self::FETCH_ASSOC): Promise;
+    public function getCurrent(int $type = self::FETCH_ASSOC);
 }
