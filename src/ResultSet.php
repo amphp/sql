@@ -3,7 +3,6 @@
 namespace Amp\Sql;
 
 use Amp\Iterator;
-use Amp\Promise;
 
 interface ResultSet extends Iterator
 {
