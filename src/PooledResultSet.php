@@ -23,13 +23,13 @@ class PooledResultSet implements ResultSet
         ($this->release)();
     }
 
-    public function advance(int $type = self::FETCH_ASSOC): Promise
+    public function advance(): Promise
     {
-        return $this->result->advance($type);
+        return $this->result->advance();
     }
 
-    public function getCurrent()
+    public function getCurrent(int $type = self::FETCH_ASSOC)
     {
-        return $this->result->getCurrent();
+        return $this->result->getCurrent($type);
     }
 }
