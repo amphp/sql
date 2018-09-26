@@ -197,8 +197,13 @@ abstract class AbstractPool implements Pool
             $connection->close();
         }
         $this->idle = new \SplQueue;
-        $this->connections = new \SplObjectStorage;
         $this->prepare = null;
+
+        if ($this->deferred instanceof Deferred) {
+            $deferred = $this->deferred;
+            $this->deferred = null;
+            $deferred->fail(new FailureException("Connection pool closed"));
+        }
     }
 
     /**
