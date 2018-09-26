@@ -27,14 +27,14 @@ abstract class StatementPool implements Statement
     private $prepare;
 
     /**
-     * Performs any necessary actions to the statement to prepare it for execution, returning the same or a new
-     * Statement object if necessary.
+     * Performs any necessary actions to the statement to prepare it for execution, returning a promise for the same or
+     * a new Statement object if necessary.
      *
      * @param Statement $statement
      *
-     * @return Statement
+     * @return Promise<Statement>
      */
-    abstract protected function prepare(Statement $statement): Statement;
+    abstract protected function prepare(Statement $statement): Promise;
 
     /**
      * @param ResultSet $resultSet
@@ -97,7 +97,8 @@ abstract class StatementPool implements Statement
             \assert($statement instanceof Statement);
 
             try {
-                $statement = $this->prepare($statement);
+                $statement = yield $this->prepare($statement);
+                \assert($statement instanceof Statement);
                 $result = yield $statement->execute($params);
             } catch (\Throwable $exception) {
                 $this->push($statement);

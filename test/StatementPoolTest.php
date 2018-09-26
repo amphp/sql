@@ -8,6 +8,7 @@ use Amp\PHPUnit\TestCase;
 use Amp\Sql\Pool;
 use Amp\Sql\Statement;
 use Amp\Sql\StatementPool;
+use Amp\Success;
 
 class StatementPoolTest extends TestCase
 {
@@ -34,6 +35,11 @@ class StatementPoolTest extends TestCase
             $statementPool = $this->getMockBuilder(StatementPool::class)
                 ->setConstructorArgs([$pool, $statement, $this->createCallback(0)])
                 ->getMockForAbstractClass();
+
+            $statementPool->method('prepare')
+                ->willReturnCallback(function (Statement $statement) {
+                    return new Success($statement);
+                });
 
             $this->assertTrue($statementPool->isAlive());
             $this->assertSame(\time(), $statementPool->getLastUsedAt());
@@ -70,6 +76,11 @@ class StatementPoolTest extends TestCase
             $statementPool = $this->getMockBuilder(StatementPool::class)
                 ->setConstructorArgs([$pool, $statement, $this->createCallback(1)])
                 ->getMockForAbstractClass();
+
+            $statementPool->method('prepare')
+                ->willReturnCallback(function (Statement $statement) {
+                    return new Success($statement);
+                });
 
             $this->assertTrue($statementPool->isAlive());
             $this->assertSame(\time(), $statementPool->getLastUsedAt());
