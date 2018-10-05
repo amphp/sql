@@ -1,8 +1,6 @@
-# Amp SQL
+# SQL
 
-## About
-
-This package provides interfaces and common classes shared by [amp/mysql](https://github.com/amphp/mysql/) and [amp/postgres](https://github.com/amphp/postgres/).
+This package provides interfaces and common classes shared by [`amphp/mysql`](https://github.com/amphp/mysql) and [`amphp/postgres`](https://github.com/amphp/postgres).
 
 ## Requirements
 
