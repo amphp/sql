@@ -1,6 +1,6 @@
 # SQL
 
-This package provides interfaces and common classes shared by [`amphp/mysql`](https://github.com/amphp/mysql) and [`amphp/postgres`](https://github.com/amphp/postgres).
+This package provides interfaces and classes shared by [`amphp/mysql`](https://github.com/amphp/mysql) and [`amphp/postgres`](https://github.com/amphp/postgres). See [`amphp/sql-common`](https://github.com/amphp/sql-common) for common implementations shared by these libraries.
 
 ## Requirements
 
