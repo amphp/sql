@@ -5,6 +5,7 @@ namespace Amp\Sql;
 abstract class ConnectionConfig
 {
     const KEY_MAP = [
+        'hostname' => 'host',
         'username' => 'user',
         'pass' => 'password',
         'database' => 'db',
@@ -32,7 +33,7 @@ abstract class ConnectionConfig
      * @param string $connectionString
      * @param string[] $keymap Map of alternative key names to canonical key names.
      *
-     * @return array
+     * @return string[]
      */
     protected static function parseConnectionString(string $connectionString, array $keymap = self::KEY_MAP): array
     {
@@ -52,6 +53,11 @@ abstract class ConnectionConfig
             }
 
             $values[$key] = $value;
+        }
+
+        if (\preg_match('/^(.+):(\d{1,5})$/', $values["host"] ?? "", $matches)) {
+            $values["host"] = $matches[1];
+            $values["port"] = $matches[2];
         }
 
         return $values;
