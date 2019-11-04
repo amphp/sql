@@ -9,7 +9,7 @@ interface Connector
     /**
      * @param ConnectionConfig $config
      *
-     * @return Promise<Connection>
+     * @return Promise<Link>
      */
     public function connect(ConnectionConfig $config): Promise;
 }
