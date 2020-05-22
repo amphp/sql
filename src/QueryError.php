@@ -8,10 +8,8 @@ class QueryError extends \Error
 
     public function __construct(string $message, string $query = "", \Throwable $previous = null)
     {
-        if ($query !== "") {
-            $this->query = $query;
-        }
         parent::__construct($message, 0, $previous);
+        $this->query = $query;
     }
 
     final public function getQuery(): string
