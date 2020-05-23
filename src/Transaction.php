@@ -24,7 +24,7 @@ interface Transaction extends Executor
     /**
      * Commits the transaction and makes it inactive.
      *
-     * @return Promise<CommandResult>
+     * @return Promise<Result>
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -33,7 +33,7 @@ interface Transaction extends Executor
     /**
      * Rolls back the transaction and makes it inactive.
      *
-     * @return Promise<CommandResult>
+     * @return Promise<Result>
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -44,7 +44,7 @@ interface Transaction extends Executor
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<CommandResult>
+     * @return Promise<Result>
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -55,7 +55,7 @@ interface Transaction extends Executor
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<CommandResult>
+     * @return Promise<Result>
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -66,7 +66,7 @@ interface Transaction extends Executor
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<CommandResult>
+     * @return Promise<Result>
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */

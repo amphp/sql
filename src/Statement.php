@@ -9,7 +9,7 @@ interface Statement extends TransientResource
     /**
      * @param mixed[] $params
      *
-     * @return Promise<CommandResult|ResultSet>
+     * @return Promise<Result>
      */
     public function execute(array $params = []): Promise;
 

@@ -2,10 +2,10 @@
 
 namespace Amp\Sql\Test;
 
-use Amp\PHPUnit\TestCase;
+use Amp\PHPUnit\AsyncTestCase;
 use Amp\Sql\QueryError;
 
-class QueryErrorTest extends TestCase
+class QueryErrorTest extends AsyncTestCase
 {
     /**
      * @test

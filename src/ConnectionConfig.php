@@ -46,7 +46,8 @@ abstract class ConnectionConfig
         }
 
         foreach ($params as $param) {
-            list($key, $value) = \array_map("trim", \explode("=", $param, 2) + [1 => null]);
+            /** @psalm-suppress PossiblyInvalidArgument */
+            [$key, $value] = \array_map("trim", \explode("=", $param, 2) + [1 => null]);
 
             if (isset($keymap[$key])) {
                 $key = $keymap[$key];

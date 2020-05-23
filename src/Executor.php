@@ -9,7 +9,7 @@ interface Executor extends TransientResource
     /**
      * @param string $sql SQL query to execute.
      *
-     * @return Promise<CommandResult|ResultSet>
+     * @return Promise<Result>
      *
      * @throws FailureException If the operation fails due to unexpected condition.
      * @throws ConnectionException If the connection to the database is lost.
@@ -32,7 +32,7 @@ interface Executor extends TransientResource
      * @param string $sql SQL query to prepare and execute.
      * @param mixed[] $params Query parameters.
      *
-     * @return Promise<CommandResult|ResultSet>
+     * @return Promise<Result>
      *
      * @throws FailureException If the operation fails due to unexpected condition.
      * @throws ConnectionException If the connection to the database is lost.
@@ -43,5 +43,5 @@ interface Executor extends TransientResource
     /**
      * Closes the executor. No further queries may be performed.
      */
-    public function close();
+    public function close(): void;
 }
