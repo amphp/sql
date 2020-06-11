@@ -16,8 +16,8 @@ interface Result extends Stream
     public function continue(): Promise;
 
     /**
-     * Resolves with a new instance of ResultSet or CommandResult if another result is available after this result.
-     * Resolves with null if no further results are available.
+     * Resolves with a new instance of Result if another result is available after this result. Resolves with null if
+     * no further results are available.
      *
      * @return Promise<Result|null>
      */
