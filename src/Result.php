@@ -3,9 +3,9 @@
 namespace Amp\Sql;
 
 use Amp\Promise;
-use Amp\Stream;
+use Amp\Pipeline;
 
-interface Result extends Stream
+interface Result extends Pipeline
 {
     /**
      * Promise returned resolves with a map (associative array) of column-names to column-values for each row in the
