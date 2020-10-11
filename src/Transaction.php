@@ -2,14 +2,12 @@
 
 namespace Amp\Sql;
 
-use Amp\Promise;
-
 interface Transaction extends Executor
 {
-    const ISOLATION_UNCOMMITTED  = 0;
-    const ISOLATION_COMMITTED    = 1;
-    const ISOLATION_REPEATABLE   = 2;
-    const ISOLATION_SERIALIZABLE = 4;
+    public const ISOLATION_UNCOMMITTED  = 0;
+    public const ISOLATION_COMMITTED    = 1;
+    public const ISOLATION_REPEATABLE   = 2;
+    public const ISOLATION_SERIALIZABLE = 4;
 
     /**
      * @return int
@@ -24,51 +22,41 @@ interface Transaction extends Executor
     /**
      * Commits the transaction and makes it inactive.
      *
-     * @return Promise<Result>
-     *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
-    public function commit(): Promise;
+    public function commit(): void;
 
     /**
      * Rolls back the transaction and makes it inactive.
      *
-     * @return Promise<Result>
-     *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
-    public function rollback(): Promise;
+    public function rollback(): void;
 
     /**
      * Creates a savepoint with the given identifier.
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<Result>
-     *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
-    public function createSavepoint(string $identifier): Promise;
+    public function createSavepoint(string $identifier): void;
 
     /**
      * Rolls back to the savepoint with the given identifier.
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<Result>
-     *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
-    public function rollbackTo(string $identifier): Promise;
+    public function rollbackTo(string $identifier): void;
 
     /**
      * Releases the savepoint with the given identifier.
      *
      * @param string $identifier Savepoint identifier.
      *
-     * @return Promise<Result>
-     *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
-    public function releaseSavepoint(string $identifier): Promise;
+    public function releaseSavepoint(string $identifier): void;
 }

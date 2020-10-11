@@ -11,14 +11,14 @@
     "homepage": "http://amphp.org",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
-        "amphp/amp": "dev-streams as 2.6"
+        "php": ">=8",
+        "amphp/amp": "^3-dev"
     },
     "require-dev": {
         "amphp/php-cs-fixer-config": "dev-master",
-        "amphp/phpunit-util": "^1.1",
-        "phpunit/phpunit": "^9 | ^8 | ^7",
-        "vimeo/psalm": "^3.11@dev"
+        "amphp/phpunit-util": "^2-dev",
+        "phpunit/phpunit": "^9",
+        "psalm/phar": "^3.11@dev"
     },
     "autoload": {
         "psr-4": {

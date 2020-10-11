@@ -2,16 +2,14 @@
 
 namespace Amp\Sql;
 
-use Amp\Promise;
-
 interface Statement extends TransientResource
 {
     /**
      * @param mixed[] $params
      *
-     * @return Promise<Result>
+     * @return Result
      */
-    public function execute(array $params = []): Promise;
+    public function execute(array $params = []): Result;
 
     /**
      * @return string The SQL string used to prepare the statement.

@@ -12,20 +12,15 @@ abstract class ConnectionConfig
         'dbname' => 'db',
     ];
 
-    /** @var string */
-    private $host;
+    private string $host;
 
-    /** @var int */
-    private $port;
+    private int $port;
 
-    /** @var string|null */
-    private $user;
+    private ?string $user;
 
-    /** @var string|null */
-    private $password;
+    private ?string $password;
 
-    /** @var string|null */
-    private $database;
+    private ?string $database;
 
     /**
      * Parses a connection string into an array of keys and values given.
@@ -64,7 +59,7 @@ abstract class ConnectionConfig
         return $values;
     }
 
-    public function __construct(string $host, int $port, string $user = null, string $password = null, string $database = null)
+    public function __construct(string $host, int $port, ?string $user = null, ?string $password = null, ?string $database = null)
     {
         $this->host = $host;
         $this->port = $port;

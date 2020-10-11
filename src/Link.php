@@ -2,8 +2,6 @@
 
 namespace Amp\Sql;
 
-use Amp\Promise;
-
 interface Link extends Executor
 {
     /**
@@ -11,7 +9,7 @@ interface Link extends Executor
      *
      * @param int $isolation Transaction isolation level.
      *
-     * @return Promise<Transaction>
+     * @return Transaction
      */
-    public function beginTransaction(int $isolation = Transaction::ISOLATION_COMMITTED): Promise;
+    public function beginTransaction(int $isolation = Transaction::ISOLATION_COMMITTED): Transaction;
 }

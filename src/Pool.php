@@ -2,14 +2,12 @@
 
 namespace Amp\Sql;
 
-use Amp\Promise;
-
 interface Pool extends Link
 {
     /**
-     * @return Promise<Link>
+     * @return Link
      */
-    public function extractConnection(): Promise;
+    public function extractConnection(): Link;
 
     /**
      * @return int Total number of active connections in the pool.
