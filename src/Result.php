@@ -2,7 +2,7 @@
 
 namespace Amp\Sql;
 
-use Amp\Pipeline;
+use Amp\Pipeline\Pipeline;
 
 interface Result extends Pipeline
 {

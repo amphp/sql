@@ -8,18 +8,21 @@
         "asynchronous",
         "async"
     ],
-    "homepage": "http://amphp.org",
+    "homepage": "https://amphp.org",
     "license": "MIT",
     "require": {
         "php": ">=8",
-        "amphp/amp": "^3-dev"
+        "amphp/amp": "^3-dev",
+        "amphp/pipeline": "dev-master"
     },
     "require-dev": {
         "amphp/php-cs-fixer-config": "dev-master",
         "amphp/phpunit-util": "^2-dev",
         "phpunit/phpunit": "^9",
-        "psalm/phar": "^3.11@dev"
+        "psalm/phar": "^4.10"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Amp\\Sql\\": "src"

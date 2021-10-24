@@ -59,8 +59,13 @@ abstract class ConnectionConfig
         return $values;
     }
 
-    public function __construct(string $host, int $port, ?string $user = null, ?string $password = null, ?string $database = null)
-    {
+    public function __construct(
+        string $host,
+        int $port,
+        ?string $user = null,
+        ?string $password = null,
+        ?string $database = null
+    ) {
         $this->host = $host;
         $this->port = $port;
         $this->user = $user;
@@ -95,7 +100,7 @@ abstract class ConnectionConfig
     /**
      * @return string|null
      */
-    final public function getUser() /* : ?string */
+    final public function getUser(): ?string
     {
         return $this->user;
     }
@@ -110,7 +115,7 @@ abstract class ConnectionConfig
     /**
      * @return string|null
      */
-    final public function getPassword() /* : ?string */
+    final public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -125,7 +130,7 @@ abstract class ConnectionConfig
     /**
      * @return string|null
      */
-    final public function getDatabase() /* : ?string */
+    final public function getDatabase(): ?string
     {
         return $this->database;
     }
