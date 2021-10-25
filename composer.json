@@ -12,8 +12,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8",
-        "amphp/amp": "^3-dev",
-        "amphp/pipeline": "dev-master"
+        "amphp/amp": "^3-dev"
     },
     "require-dev": {
         "amphp/php-cs-fixer-config": "dev-master",

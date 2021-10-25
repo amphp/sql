@@ -2,18 +2,8 @@
 
 namespace Amp\Sql;
 
-use Amp\Pipeline\Pipeline;
-
-interface Result extends Pipeline
+interface Result extends \Traversable
 {
-    /**
-     * Promise returned resolves with a map (associative array) of column-names to column-values for each row in the
-     * result set. The promise resolves with null when no more rows remain.
-     *
-     * @return array<string, mixed>|null
-     */
-    public function continue(): ?array;
-
     /**
      * Resolves with a new instance of Result if another result is available after this result. Resolves with null if
      * no further results are available.
