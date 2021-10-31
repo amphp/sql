@@ -19,4 +19,12 @@ interface Result extends \Traversable
      * @return int|null
      */
     public function getRowCount(): ?int;
+
+    /**
+     * Returns the number of columns returned by the query if applicable or null if the number of columns is
+     * unknown or not applicable to the query.
+     *
+     * @return int|null
+     */
+    public function getColumnCount(): ?int;
 }
