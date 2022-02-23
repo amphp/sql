@@ -4,8 +4,7 @@ namespace Amp\Sql;
 
 class QueryError extends \Error
 {
-    /** @var string */
-    protected string $query = "";
+    protected readonly string $query;
 
     public function __construct(string $message, string $query = "", \Throwable $previous = null)
     {

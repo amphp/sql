@@ -7,9 +7,9 @@ interface Link extends Executor
     /**
      * Starts a transaction on a single connection.
      *
-     * @param int $isolation Transaction isolation level.
+     * @param TransactionIsolation $isolation Transaction isolation level.
      *
      * @return Transaction
      */
-    public function beginTransaction(int $isolation = Transaction::ISOLATION_COMMITTED): Transaction;
+    public function beginTransaction(TransactionIsolation $isolation = TransactionIsolation::COMMITTED): Transaction;
 }

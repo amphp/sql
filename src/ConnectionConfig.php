@@ -4,7 +4,7 @@ namespace Amp\Sql;
 
 abstract class ConnectionConfig
 {
-    const KEY_MAP = [
+    public const KEY_MAP = [
         'hostname' => 'host',
         'username' => 'user',
         'pass' => 'password',

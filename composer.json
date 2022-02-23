@@ -11,16 +11,16 @@
     "homepage": "https://amphp.org",
     "license": "MIT",
     "require": {
-        "php": ">=8",
-        "amphp/amp": "^3-dev"
+        "php": ">=8.1",
+        "amphp/amp": "^3"
     },
     "require-dev": {
         "amphp/php-cs-fixer-config": "dev-master",
-        "amphp/phpunit-util": "^2-dev",
+        "amphp/phpunit-util": "^3",
         "phpunit/phpunit": "^9",
         "psalm/phar": "^4.10"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
