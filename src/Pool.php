@@ -5,7 +5,8 @@ namespace Amp\Sql;
 interface Pool extends Link
 {
     /**
-     * @return Link
+     * Gets a single connection from the pool to run a set of queries against a single connection.
+     * Generally a transaction should be used instead of this method.
      */
     public function extractConnection(): Link;
 

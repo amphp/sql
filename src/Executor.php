@@ -7,8 +7,6 @@ interface Executor extends TransientResource
     /**
      * @param string $sql SQL query to execute.
      *
-     * @return Result
-     *
      * @throws FailureException If the operation fails due to unexpected condition.
      * @throws ConnectionException If the connection to the database is lost.
      * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
@@ -17,8 +15,6 @@ interface Executor extends TransientResource
 
     /**
      * @param string $sql SQL query to prepare.
-     *
-     * @return Statement
      *
      * @throws FailureException If the operation fails due to unexpected condition.
      * @throws ConnectionException If the connection to the database is lost.
@@ -29,8 +25,6 @@ interface Executor extends TransientResource
     /**
      * @param string $sql SQL query to prepare and execute.
      * @param mixed[] $params Query parameters.
-     *
-     * @return Result
      *
      * @throws FailureException If the operation fails due to unexpected condition.
      * @throws ConnectionException If the connection to the database is lost.

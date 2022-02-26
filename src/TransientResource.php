@@ -6,8 +6,6 @@ interface TransientResource
 {
     /**
      * Indicates if the resource is still valid.
-     *
-     * @return bool
      */
     public function isAlive(): bool;
 

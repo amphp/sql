@@ -6,8 +6,6 @@ interface Statement extends TransientResource
 {
     /**
      * @param mixed[] $params
-     *
-     * @return Result
      */
     public function execute(array $params = []): Result;
 

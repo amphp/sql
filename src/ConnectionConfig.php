@@ -25,7 +25,7 @@ abstract class ConnectionConfig
     /**
      * Parses a connection string into an array of keys and values given.
      *
-     * @param string $connectionString
+     * @param string $connectionString Connection string, e.g., "hostname=localhost username=sql password=default"
      * @param string[] $keymap Map of alternative key names to canonical key names.
      *
      * @return string[]
@@ -97,9 +97,6 @@ abstract class ConnectionConfig
         return $new;
     }
 
-    /**
-     * @return string|null
-     */
     final public function getUser(): ?string
     {
         return $this->user;
@@ -112,9 +109,6 @@ abstract class ConnectionConfig
         return $new;
     }
 
-    /**
-     * @return string|null
-     */
     final public function getPassword(): ?string
     {
         return $this->password;
@@ -127,9 +121,6 @@ abstract class ConnectionConfig
         return $new;
     }
 
-    /**
-     * @return string|null
-     */
     final public function getDatabase(): ?string
     {
         return $this->database;
