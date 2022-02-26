@@ -11,5 +11,5 @@ interface Link extends Executor
      *
      * @return Transaction
      */
-    public function beginTransaction(TransactionIsolation $isolation = TransactionIsolation::COMMITTED): Transaction;
+    public function beginTransaction(TransactionIsolation $isolation = TransactionIsolation::Committed): Transaction;
 }
