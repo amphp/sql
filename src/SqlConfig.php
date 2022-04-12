@@ -2,7 +2,7 @@
 
 namespace Amp\Sql;
 
-abstract class ConnectionConfig
+abstract class SqlConfig
 {
     public const KEY_MAP = [
         'hostname' => 'host',

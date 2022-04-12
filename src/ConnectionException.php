@@ -2,6 +2,6 @@
 
 namespace Amp\Sql;
 
-class ConnectionException extends FailureException
+class ConnectionException extends SqlException
 {
 }

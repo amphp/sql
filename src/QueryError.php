@@ -4,12 +4,12 @@ namespace Amp\Sql;
 
 class QueryError extends \Error
 {
-    protected readonly string $query;
-
-    public function __construct(string $message, string $query = "", \Throwable $previous = null)
-    {
+    public function __construct(
+        string $message,
+        protected readonly string $query = "",
+        ?\Throwable $previous = null,
+    ) {
         parent::__construct($message, 0, $previous);
-        $this->query = $query;
     }
 
     final public function getQuery(): string
