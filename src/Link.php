@@ -9,5 +9,7 @@ interface Link extends Executor
      *
      * @param TransactionIsolation $isolation Transaction isolation level.
      */
-    public function beginTransaction(TransactionIsolation $isolation = TransactionIsolation::Committed): Transaction;
+    public function beginTransaction(
+        TransactionIsolation $isolation = TransactionIsolationLevel::Committed,
+    ): Transaction;
 }

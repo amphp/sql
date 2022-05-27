@@ -2,30 +2,15 @@
 
 namespace Amp\Sql;
 
-enum TransactionIsolation
+interface TransactionIsolation
 {
-    case Uncommitted;
-    case Committed;
-    case Repeatable;
-    case Serializable;
+    /**
+     * @return string Human-readable label for the transaction isolation level.
+     */
+    public function getLabel(): string;
 
-    public function getLabel(): string
-    {
-        return match ($this) {
-            self::Uncommitted => 'Uncommitted',
-            self::Committed => 'Committed',
-            self::Repeatable => 'Repeatable',
-            self::Serializable => 'Serializable',
-        };
-    }
-
-    public function toSql(): string
-    {
-        return match ($this) {
-            self::Uncommitted => 'READ UNCOMMITTED',
-            self::Committed => 'READ COMMITTED',
-            self::Repeatable => 'REPEATABLE READ',
-            self::Serializable => 'SERIALIZABLE',
-        };
-    }
+    /**
+     * @return string SQL to be inserted as the transaction isolation level.
+     */
+    public function toSql(): string;
 }
