@@ -2,13 +2,10 @@
 
 namespace Amp\Sql;
 
-interface TransientResource
-{
-    /**
-     * Indicates if the resource is still valid.
-     */
-    public function isAlive(): bool;
+use Amp\Closable;
 
+interface TransientResource extends Closable
+{
     /**
      * Get the timestamp of the last usage of this resource.
      *
