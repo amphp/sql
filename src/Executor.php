@@ -31,9 +31,4 @@ interface Executor extends TransientResource
      * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
      */
     public function execute(string $sql, array $params = []): Result;
-
-    /**
-     * Closes the executor. No further queries may be performed.
-     */
-    public function close(): void;
 }
