@@ -2,6 +2,11 @@
 
 namespace Amp\Sql;
 
+/**
+ * @template TResult extends Result
+ * @template TStatement extends Statement
+ * @extends Executor<TResult, TStatement>
+ */
 interface Transaction extends Executor
 {
     public function getIsolationLevel(): TransactionIsolation;

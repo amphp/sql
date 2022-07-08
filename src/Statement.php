@@ -2,10 +2,13 @@
 
 namespace Amp\Sql;
 
+/**
+ * @template TResult extends Result
+ */
 interface Statement extends TransientResource
 {
     /**
-     * @param mixed[] $params
+     * @return TResult
      */
     public function execute(array $params = []): Result;
 
