@@ -17,6 +17,8 @@ interface SqlConnector
      * @param TConfig $config
      *
      * @return TLink
+     *
+     * @throws ConnectionException
      */
     public function connect(SqlConfig $config, ?Cancellation $cancellation = null): Link;
 }
