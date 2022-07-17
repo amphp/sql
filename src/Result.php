@@ -2,6 +2,10 @@
 
 namespace Amp\Sql;
 
+/**
+ * @template TFieldValue
+ * @extends \Traversable<int, array<string, TFieldValue>>
+ */
 interface Result extends \Traversable
 {
     /**
