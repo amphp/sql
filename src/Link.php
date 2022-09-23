@@ -3,9 +3,9 @@
 namespace Amp\Sql;
 
 /**
- * @template TResult extends Result
- * @template TStatement extends Statement
- * @template TTransaction extends Transaction
+ * @template TResult of Result
+ * @template TStatement of Statement
+ * @template TTransaction of Transaction
  *
  * @extends Executor<TResult, TStatement>
  */

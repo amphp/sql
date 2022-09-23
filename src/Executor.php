@@ -3,8 +3,8 @@
 namespace Amp\Sql;
 
 /**
- * @template TResult extends Result
- * @template TStatement extends Statement
+ * @template TResult of Result
+ * @template TStatement of Statement
  */
 interface Executor extends TransientResource
 {

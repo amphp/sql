@@ -5,8 +5,8 @@ namespace Amp\Sql;
 use Amp\Cancellation;
 
 /**
- * @template TConfig extends SqlConfig
- * @template TLink extends Link
+ * @template TConfig of SqlConfig
+ * @template TLink of Link
  */
 interface SqlConnector
 {
