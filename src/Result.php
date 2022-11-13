@@ -9,6 +9,14 @@ namespace Amp\Sql;
 interface Result extends \Traversable
 {
     /**
+     * Returns the next row in the result set or null if no rows remain. This method may be used as an alternative
+     * to foreach iteration to obtain single rows from the result.
+     *
+     * @return array<string, TFieldValue>|null
+     */
+    public function fetchRow(): ?array;
+
+    /**
      * Resolves with a new instance of Result if another result is available after this result. Resolves with null if
      * no further results are available.
      */
