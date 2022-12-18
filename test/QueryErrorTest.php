@@ -2,8 +2,8 @@
 
 namespace Amp\Sql\Test;
 
-use Amp\PHPUnit\TestCase;
 use Amp\Sql\QueryError;
+use PHPUnit\Framework\TestCase;
 
 class QueryErrorTest extends TestCase
 {

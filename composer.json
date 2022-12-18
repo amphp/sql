@@ -11,13 +11,12 @@
     "homepage": "http://amphp.org",
     "license": "MIT",
     "require": {
-        "php": ">=7",
+        "php": ">=7.1",
         "amphp/amp": "^2"
     },
     "require-dev": {
         "amphp/php-cs-fixer-config": "dev-master",
-        "amphp/phpunit-util": "^1",
-        "phpunit/phpunit": "^6"
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +30,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0.0"
+            "php": "7.2.0"
         }
     },
     "scripts": {
