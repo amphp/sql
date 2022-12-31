@@ -26,9 +26,9 @@ abstract class SqlConfig
      * Parses a connection string into an array of keys and values given.
      *
      * @param string $connectionString Connection string, e.g., "hostname=localhost username=sql password=default"
-     * @param string[] $keymap Map of alternative key names to canonical key names.
+     * @param array<non-empty-string, non-empty-string> $keymap Map of alternative key names to canonical key names.
      *
-     * @return string[]
+     * @return array<non-empty-string, string>
      */
     protected static function parseConnectionString(string $connectionString, array $keymap = self::KEY_MAP): array
     {
@@ -42,18 +42,17 @@ abstract class SqlConfig
 
         foreach ($params as $param) {
             /** @psalm-suppress PossiblyInvalidArgument */
-            [$key, $value] = \array_map("trim", \explode("=", $param, 2) + [1 => ""]);
-
-            if (isset($keymap[$key])) {
-                $key = $keymap[$key];
+            [$key, $value] = \array_map(\trim(...), \explode("=", $param, 2) + [1 => ""]);
+            if ($key === '') {
+                throw new \ValueError("Empty key name in connection string");
             }
 
-            $values[$key] = $value;
+            $values[$keymap[$key] ?? $key] = $value;
         }
 
-        if (\preg_match('/^(.+):(\d{1,5})$/', $values["host"] ?? "", $matches)) {
-            $values["host"] = $matches[1];
-            $values["port"] = $matches[2];
+        if (\preg_match('/^(?<host>.+):(?<port>\d{1,5})$/', $values["host"] ?? "", $matches)) {
+            $values["host"] = $matches["host"];
+            $values["port"] = $matches["port"];
         }
 
         return $values;
