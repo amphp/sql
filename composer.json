@@ -15,13 +15,11 @@
         "amphp/amp": "^3"
     },
     "require-dev": {
-        "amphp/php-cs-fixer-config": "^2-dev",
+        "amphp/php-cs-fixer-config": "^2",
         "amphp/phpunit-util": "^3",
         "phpunit/phpunit": "^9",
         "psalm/phar": "^4.10"
     },
-    "minimum-stability": "beta",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Amp\\Sql\\": "src"
