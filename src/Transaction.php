@@ -33,7 +33,7 @@ interface Transaction extends Executor
     /**
      * Creates a savepoint with the given identifier.
      *
-     * @param string $identifier Savepoint identifier.
+     * @param non-empty-string $identifier Savepoint identifier.
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -42,7 +42,7 @@ interface Transaction extends Executor
     /**
      * Rolls back to the savepoint with the given identifier.
      *
-     * @param string $identifier Savepoint identifier.
+     * @param non-empty-string $identifier Savepoint identifier.
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
@@ -51,7 +51,7 @@ interface Transaction extends Executor
     /**
      * Releases the savepoint with the given identifier.
      *
-     * @param string $identifier Savepoint identifier.
+     * @param non-empty-string $identifier Savepoint identifier.
      *
      * @throws TransactionError If the transaction has been committed or rolled back.
      */
