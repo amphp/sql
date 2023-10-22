@@ -77,7 +77,7 @@ abstract class SqlConfig
         return $this->host;
     }
 
-    final public function withHost(string $host): self
+    final public function withHost(string $host): static
     {
         $new = clone $this;
         $new->host = $host;
@@ -89,7 +89,7 @@ abstract class SqlConfig
         return $this->port;
     }
 
-    final public function withPort(int $port): self
+    final public function withPort(int $port): static
     {
         $new = clone $this;
         $new->port = $port;
@@ -101,7 +101,7 @@ abstract class SqlConfig
         return $this->user;
     }
 
-    final public function withUser(string $user = null): self
+    final public function withUser(string $user = null): static
     {
         $new = clone $this;
         $new->user = $user;
@@ -113,7 +113,7 @@ abstract class SqlConfig
         return $this->password;
     }
 
-    final public function withPassword(string $password = null): self
+    final public function withPassword(string $password = null): static
     {
         $new = clone $this;
         $new->password = $password;
@@ -125,7 +125,7 @@ abstract class SqlConfig
         return $this->database;
     }
 
-    final public function withDatabase(string $database = null): self
+    final public function withDatabase(string $database = null): static
     {
         $new = clone $this;
         $new->database = $database;
