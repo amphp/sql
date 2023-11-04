@@ -5,7 +5,8 @@ namespace Amp\Sql;
 /**
  * @template TResult of Result
  * @template TStatement of Statement
- * @extends Executor<TResult, TStatement>
+ * @template TTransaction of Transaction
+ * @extends Executor<TResult, TStatement, TTransaction>
  */
 interface Transaction extends Executor
 {
@@ -15,6 +16,11 @@ interface Transaction extends Executor
      * @return bool True if the transaction is active, false if it has been committed or rolled back.
      */
     public function isActive(): bool;
+
+    /**
+     * @return bool True if this transaction was created inside another transaction using a savepoint.
+     */
+    public function isNestedTransaction(): bool;
 
     /**
      * Commits the transaction and makes it inactive.
@@ -31,29 +37,19 @@ interface Transaction extends Executor
     public function rollback(): void;
 
     /**
-     * Creates a savepoint with the given identifier.
+     * Attaches a callback which is invoked when the entire transaction is committed. If this transaction
+     * is a nested transaction, the callback will not be invoked until the top-level transaction is committed.
      *
-     * @param non-empty-string $identifier Savepoint identifier.
-     *
-     * @throws TransactionError If the transaction has been committed or rolled back.
+     * @param \Closure():void $onCommit
      */
-    public function createSavepoint(string $identifier): void;
+    public function onCommit(\Closure $onCommit): void;
 
     /**
-     * Rolls back to the savepoint with the given identifier.
+     * Attaches a callback which is invoked when the transaction is rolled back. If in a nested transaction, the
+     * callbacks may be invoked when rolling back to a savepoint or if the entire transaction is rolled back,
+     * regardless of if the savepoint was released prior.
      *
-     * @param non-empty-string $identifier Savepoint identifier.
-     *
-     * @throws TransactionError If the transaction has been committed or rolled back.
+     * @param \Closure():void $onRollback
      */
-    public function rollbackTo(string $identifier): void;
-
-    /**
-     * Releases the savepoint with the given identifier.
-     *
-     * @param non-empty-string $identifier Savepoint identifier.
-     *
-     * @throws TransactionError If the transaction has been committed or rolled back.
-     */
-    public function releaseSavepoint(string $identifier): void;
+    public function onRollback(\Closure $onRollback): void;
 }

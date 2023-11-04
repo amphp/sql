@@ -7,18 +7,14 @@ namespace Amp\Sql;
  * @template TStatement of Statement
  * @template TTransaction of Transaction
  *
- * @extends Executor<TResult, TStatement>
+ * @extends Executor<TResult, TStatement, TTransaction>
  */
 interface Link extends Executor
 {
     /**
-     * Starts a transaction on a single connection.
+     * Sets the transaction isolation level for transactions began on this link.
      *
-     * @param TransactionIsolation $isolation Transaction isolation level.'
-     *
-     * @return TTransaction
+     * @see Executor::beginTransaction()
      */
-    public function beginTransaction(
-        TransactionIsolation $isolation = TransactionIsolationLevel::Committed,
-    ): Transaction;
+    public function setTransactionIsolation(TransactionIsolation $isolation): void;
 }

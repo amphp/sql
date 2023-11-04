@@ -5,6 +5,7 @@ namespace Amp\Sql;
 /**
  * @template TResult of Result
  * @template TStatement of Statement
+ * @template TTransaction of Transaction
  */
 interface Executor extends TransientResource
 {
@@ -32,7 +33,7 @@ interface Executor extends TransientResource
 
     /**
      * @param string $sql SQL query to prepare and execute.
-     * @param mixed[] $params Query parameters.
+     * @param array<int, mixed>|array<string, mixed> $params Query parameters.
      *
      * @return TResult
      *
@@ -43,7 +44,9 @@ interface Executor extends TransientResource
     public function execute(string $sql, array $params = []): Result;
 
     /**
-     * Closes the executor. No further queries may be performed.
+     * Starts a transaction, returning an object where all queries are executed on a single connection.
+     *
+     * @return TTransaction
      */
-    public function close(): void;
+    public function beginTransaction(): Transaction;
 }
