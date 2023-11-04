@@ -6,6 +6,7 @@ namespace Amp\Sql;
  * @template TResult of Result
  * @template TStatement of Statement
  * @template TTransaction of Transaction
+ * @template TConfig of SqlConfig
  *
  * @extends Link<TResult, TStatement, TTransaction>
  */
@@ -15,9 +16,9 @@ interface Pool extends Link
      * Gets a single connection from the pool to run a set of queries against a single connection.
      * Generally a transaction should be used instead of this method.
      *
-     * @return Link<TResult, TStatement, TTransaction>
+     * @return Connection<TResult, TStatement, TTransaction, TConfig>
      */
-    public function extractConnection(): Link;
+    public function extractConnection(): Connection;
 
     /**
      * @return int Total number of active connections in the pool.
