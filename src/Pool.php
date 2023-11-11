@@ -16,7 +16,7 @@ interface Pool extends Link
      * Gets a single connection from the pool to run a set of queries against a single connection.
      * Generally a transaction should be used instead of this method.
      *
-     * @return Connection<TResult, TStatement, TTransaction, TConfig>
+     * @return Connection<TConfig, TResult, TStatement, TTransaction>
      */
     public function extractConnection(): Connection;
 

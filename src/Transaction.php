@@ -4,7 +4,7 @@ namespace Amp\Sql;
 
 /**
  * @template TResult of Result
- * @template TStatement of Statement
+ * @template TStatement of Statement<TResult>
  * @template TTransaction of Transaction
  * @extends Executor<TResult, TStatement, TTransaction>
  */
