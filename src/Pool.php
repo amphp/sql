@@ -3,10 +3,10 @@
 namespace Amp\Sql;
 
 /**
+ * @template TConfig of SqlConfig
  * @template TResult of Result
  * @template TStatement of Statement
  * @template TTransaction of Transaction
- * @template TConfig of SqlConfig
  *
  * @extends Link<TResult, TStatement, TTransaction>
  */
