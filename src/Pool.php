@@ -5,12 +5,12 @@ namespace Amp\Sql;
 /**
  * @template TConfig of SqlConfig
  * @template TResult of Result
- * @template TStatement of Statement
+ * @template TStatement of Statement<TResult>
  * @template TTransaction of Transaction
  *
- * @extends Link<TResult, TStatement, TTransaction>
+ * @extends Connection<TConfig, TResult, TStatement, TTransaction>
  */
-interface Pool extends Link
+interface Pool extends Connection
 {
     /**
      * Gets a single connection from the pool to run a set of queries against a single connection.
