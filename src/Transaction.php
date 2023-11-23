@@ -6,9 +6,10 @@ namespace Amp\Sql;
  * @template TResult of Result
  * @template TStatement of Statement<TResult>
  * @template TTransaction of Transaction
- * @extends Executor<TResult, TStatement, TTransaction>
+ *
+ * @extends Link<TResult, TStatement, TTransaction>
  */
-interface Transaction extends Executor
+interface Transaction extends Link
 {
     public function getIsolationLevel(): TransactionIsolation;
 

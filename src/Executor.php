@@ -5,7 +5,6 @@ namespace Amp\Sql;
 /**
  * @template TResult of Result
  * @template TStatement of Statement
- * @template TTransaction of Transaction
  */
 interface Executor extends TransientResource
 {
@@ -42,11 +41,4 @@ interface Executor extends TransientResource
      * @throws QueryError If the operation fails due to an error in the query (such as a syntax error).
      */
     public function execute(string $sql, array $params = []): Result;
-
-    /**
-     * Starts a transaction, returning an object where all queries are executed on a single connection.
-     *
-     * @return TTransaction
-     */
-    public function beginTransaction(): Transaction;
 }

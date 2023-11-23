@@ -4,17 +4,17 @@ namespace Amp\Sql;
 
 /**
  * @template TResult of Result
- * @template TStatement of Statement
+ * @template TStatement of Statement<TResult>
  * @template TTransaction of Transaction
  *
- * @extends Executor<TResult, TStatement, TTransaction>
+ * @extends Executor<TResult, TStatement>
  */
 interface Link extends Executor
 {
     /**
-     * Sets the transaction isolation level for transactions began on this link.
+     * Starts a transaction, returning an object where all queries are executed on a single connection.
      *
-     * @see Executor::beginTransaction()
+     * @return TTransaction
      */
-    public function setTransactionIsolation(TransactionIsolation $isolation): void;
+    public function beginTransaction(): Transaction;
 }
