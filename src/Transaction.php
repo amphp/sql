@@ -19,9 +19,9 @@ interface Transaction extends Link
     public function isActive(): bool;
 
     /**
-     * @return bool True if this transaction was created inside another transaction using a savepoint.
+     * @return string|null Nested transaction identifier or null if a top-level transaction.
      */
-    public function isNestedTransaction(): bool;
+    public function getSavepointIdentifier(): ?string;
 
     /**
      * Commits the transaction and makes it inactive.
