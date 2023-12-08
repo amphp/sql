@@ -11,7 +11,7 @@ namespace Amp\Sql;
  */
 interface Transaction extends Link
 {
-    public function getIsolationLevel(): TransactionIsolation;
+    public function getIsolation(): TransactionIsolation;
 
     /**
      * @return bool True if the transaction is active, false if it has been committed or rolled back.

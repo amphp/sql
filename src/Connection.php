@@ -18,6 +18,11 @@ interface Connection extends Link
     public function getConfig(): SqlConfig;
 
     /**
+     * @return TransactionIsolation Current transaction isolation used when beginning transactions on this connection.
+     */
+    public function getTransactionIsolation(): TransactionIsolation;
+
+    /**
      * Sets the transaction isolation level for transactions began on this link.
      *
      * @see Link::beginTransaction()
