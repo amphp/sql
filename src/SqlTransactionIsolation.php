@@ -2,7 +2,7 @@
 
 namespace Amp\Sql;
 
-interface TransactionIsolation
+interface SqlTransactionIsolation
 {
     /**
      * @return string Human-readable label for the transaction isolation level.

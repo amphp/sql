@@ -4,21 +4,21 @@ namespace Amp\Sql;
 
 /**
  * @template TConfig of SqlConfig
- * @template TResult of Result
- * @template TStatement of Statement<TResult>
- * @template TTransaction of Transaction
+ * @template TResult of SqlResult
+ * @template TStatement of SqlStatement<TResult>
+ * @template TTransaction of SqlTransaction
  *
- * @extends Connection<TConfig, TResult, TStatement, TTransaction>
+ * @extends SqlConnection<TConfig, TResult, TStatement, TTransaction>
  */
-interface Pool extends Connection
+interface SqlConnectionPool extends SqlConnection
 {
     /**
      * Gets a single connection from the pool to run a set of queries against a single connection.
      * Generally a transaction should be used instead of this method.
      *
-     * @return Connection<TConfig, TResult, TStatement, TTransaction>
+     * @return SqlConnection<TConfig, TResult, TStatement, TTransaction>
      */
-    public function extractConnection(): Connection;
+    public function extractConnection(): SqlConnection;
 
     /**
      * @return int Total number of active connections in the pool.

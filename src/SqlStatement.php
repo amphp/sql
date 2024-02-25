@@ -3,14 +3,14 @@
 namespace Amp\Sql;
 
 /**
- * @template TResult of Result
+ * @template TResult of SqlResult
  */
-interface Statement extends TransientResource
+interface SqlStatement extends SqlTransientResource
 {
     /**
      * @return TResult
      */
-    public function execute(array $params = []): Result;
+    public function execute(array $params = []): SqlResult;
 
     /**
      * @return string The SQL string used to prepare the statement.

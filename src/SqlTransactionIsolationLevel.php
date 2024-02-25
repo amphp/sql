@@ -2,7 +2,7 @@
 
 namespace Amp\Sql;
 
-enum TransactionIsolationLevel implements TransactionIsolation
+enum SqlTransactionIsolationLevel implements SqlTransactionIsolation
 {
     case Uncommitted;
     case Committed;

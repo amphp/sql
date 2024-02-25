@@ -6,7 +6,7 @@ use Amp\Cancellation;
 
 /**
  * @template TConfig of SqlConfig
- * @template TConnection of Connection
+ * @template TConnection of SqlConnection
  */
 interface SqlConnector
 {
@@ -18,7 +18,7 @@ interface SqlConnector
      *
      * @return TConnection
      *
-     * @throws ConnectionException
+     * @throws SqlConnectionException
      */
-    public function connect(SqlConfig $config, ?Cancellation $cancellation = null): Connection;
+    public function connect(SqlConfig $config, ?Cancellation $cancellation = null): SqlConnection;
 }

@@ -2,6 +2,6 @@
 
 namespace Amp\Sql;
 
-class TransactionError extends \Error
+class SqlConnectionException extends SqlException
 {
 }

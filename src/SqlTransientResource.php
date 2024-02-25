@@ -4,7 +4,7 @@ namespace Amp\Sql;
 
 use Amp\Closable;
 
-interface TransientResource extends Closable
+interface SqlTransientResource extends Closable
 {
     /**
      * Get the timestamp of the last usage of this resource.

@@ -2,7 +2,7 @@
 
 namespace Amp\Sql;
 
-class QueryError extends \Error
+class SqlQueryError extends \Error
 {
     public function __construct(
         string $message,

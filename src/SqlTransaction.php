@@ -3,15 +3,15 @@
 namespace Amp\Sql;
 
 /**
- * @template TResult of Result
- * @template TStatement of Statement<TResult>
- * @template TTransaction of Transaction
+ * @template TResult of SqlResult
+ * @template TStatement of SqlStatement<TResult>
+ * @template TTransaction of SqlTransaction
  *
- * @extends Link<TResult, TStatement, TTransaction>
+ * @extends SqlLink<TResult, TStatement, TTransaction>
  */
-interface Transaction extends Link
+interface SqlTransaction extends SqlLink
 {
-    public function getIsolation(): TransactionIsolation;
+    public function getIsolation(): SqlTransactionIsolation;
 
     /**
      * @return bool True if the transaction is active, false if it has been committed or rolled back.
@@ -26,14 +26,14 @@ interface Transaction extends Link
     /**
      * Commits the transaction and makes it inactive.
      *
-     * @throws TransactionError If the transaction has been committed or rolled back.
+     * @throws SqlTransactionError If the transaction has been committed or rolled back.
      */
     public function commit(): void;
 
     /**
      * Rolls back the transaction and makes it inactive.
      *
-     * @throws TransactionError If the transaction has been committed or rolled back.
+     * @throws SqlTransactionError If the transaction has been committed or rolled back.
      */
     public function rollback(): void;
 
