@@ -4,7 +4,7 @@ This package provides interfaces and classes shared by [`amphp/mysql`](https://g
 
 ## Requirements
 
-- PHP 7.0+
+- PHP 8.1+
 
 ## Versioning
 
@@ -12,7 +12,7 @@ This package provides interfaces and classes shared by [`amphp/mysql`](https://g
 
 ## Security
 
-If you discover any security related issues, please email [`contact@amphp.org`](mailto:contact@amphp.org) instead of using the issue tracker.
+If you discover any security related issues, please use the private security issue reporter instead of using the public issue tracker.
 
 ## License
 
