@@ -101,7 +101,7 @@ abstract class SqlConfig
         return $this->user;
     }
 
-    final public function withUser(string $user = null): static
+    final public function withUser(?string $user = null): static
     {
         $new = clone $this;
         $new->user = $user;
@@ -113,7 +113,7 @@ abstract class SqlConfig
         return $this->password;
     }
 
-    final public function withPassword(string $password = null): static
+    final public function withPassword(?string $password = null): static
     {
         $new = clone $this;
         $new->password = $password;
@@ -125,7 +125,7 @@ abstract class SqlConfig
         return $this->database;
     }
 
-    final public function withDatabase(string $database = null): static
+    final public function withDatabase(?string $database = null): static
     {
         $new = clone $this;
         $new->database = $database;
