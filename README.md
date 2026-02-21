@@ -6,6 +6,8 @@ This package provides interfaces and classes shared by [`amphp/mysql`](https://g
 
 - PHP 8.1+
 
+We require PHP 8.2+ for development due to the Psalm version we use, but still support PHP 8.1 at runtime. However, [PHP 8.1 no longer receives updates](https://www.php.net/supported-versions.php), so please upgrade to a newer version of PHP.
+
 ## Versioning
 
 `amphp/sql` follows the [semver](http://semver.org/) semantic versioning specification like all other `amphp` packages.

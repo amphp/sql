@@ -9,6 +9,7 @@ enum SqlTransactionIsolationLevel implements SqlTransactionIsolation
     case Repeatable;
     case Serializable;
 
+    #[\Override]
     public function getLabel(): string
     {
         return match ($this) {
@@ -19,6 +20,7 @@ enum SqlTransactionIsolationLevel implements SqlTransactionIsolation
         };
     }
 
+    #[\Override]
     public function toSql(): string
     {
         return match ($this) {
