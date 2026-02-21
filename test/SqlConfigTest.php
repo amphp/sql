@@ -25,20 +25,25 @@ class SqlConfigTest extends TestCase
         };
     }
 
-    public function testPortInHost(): void
+    public function provideValidConnectionStrings(): array
     {
-        $config = $this->createConfigFromString("host=localhost:5432 user=user database=test");
-
-        self::assertSame("localhost", $config->getHost());
-        self::assertSame(5432, $config->getPort());
-        self::assertSame("user", $config->getUser());
-        self::assertSame("", $config->getPassword());
-        self::assertSame("test", $config->getDatabase());
+        return [
+            'basic' => ["host=localhost port=5432 user=user pass=test db=test"],
+            'alternative' => ["host=localhost;port=5432;user=user;password=test;db=test"],
+            'port-in-host' => ["host=localhost:5432 user=user pass=test db=test"],
+            'whitespace' => ["   host=localhost   port=5432   user=user   pass=test   db=test   "],
+            'whitespace-after-semicolon' => ["host=localhost; port=5432; user=user; password=test; db=test; "],
+            'quotes' => ['host="localhost" port=5432 user="user" pass="test" db="test"'],
+            'alternative-with-whitespace' => ["host=localhost; port=5432; user=user; password=test; db=test;"],
+        ];
     }
 
-    public function testBasicSyntax(): void
+    /**
+     * @dataProvider provideValidConnectionStrings
+     */
+    public function testValidStrings(string $connectionString): void
     {
-        $config = $this->createConfigFromString("host=localhost port=5432 user=user pass=test db=test");
+        $config = $this->createConfigFromString($connectionString);
 
         self::assertSame("localhost", $config->getHost());
         self::assertSame(5432, $config->getPort());
@@ -47,21 +52,37 @@ class SqlConfigTest extends TestCase
         self::assertSame("test", $config->getDatabase());
     }
 
-    public function testAlternativeSyntax(): void
+    public function testQuoteInQuotedValue(): void
     {
-        $config = $this->createConfigFromString("host=localhost;port=3306;user=user;password=test;db=test");
+        $config = $this->createConfigFromString(
+            <<<'CS'
+            host="local\"host:3306" database='test'
+            CS
+        );
 
-        self::assertSame("localhost", $config->getHost());
+        self::assertSame('local"host', $config->getHost());
         self::assertSame(3306, $config->getPort());
-        self::assertSame("user", $config->getUser());
-        self::assertSame("test", $config->getPassword());
-        self::assertSame("test", $config->getDatabase());
+        self::assertSame('test', $config->getDatabase());
     }
 
-    public function testInvalidString(): void
+    public function provideInvalidConnectionStrings(): array
+    {
+        return [
+            'missing-value' => ['host='],
+            'empty-value' => ['host=""'],
+            'leading-characters' => ['test host=localhost'],
+            'trailing-characters' => ['host=localhost test'],
+            'invalid-whitespace' => ['host= localhost'],
+            'duplicate-key' => ['host=localhost port=5432 port=5433']
+        ];
+    }
+
+    /**
+     * @dataProvider provideInvalidConnectionStrings
+     */
+    public function testInvalidStrings(string $connectionString): void
     {
         $this->expectException(\ValueError::class);
-        $this->expectExceptionMessage("Empty key name in connection string");
-        $this->createConfigFromString("invalid =connection string");
+        $this->createConfigFromString($connectionString);
     }
 }

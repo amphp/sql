@@ -12,6 +12,10 @@ abstract class SqlConfig
         'dbname' => 'db',
     ];
 
+    private const KEY_VALUE_PAIR_REGEXP = <<<'REGEXP'
+        [\G\s*(\w+)=((['"])(?:\\(?:\\|\3)|(?!\3).)*+\3|[^ '";]\S*?)(?:\s+|;|$)]
+        REGEXP;
+
     private string $host;
 
     private int $port;
@@ -33,26 +37,52 @@ abstract class SqlConfig
     protected static function parseConnectionString(string $connectionString, array $keymap = self::KEY_MAP): array
     {
         $values = [];
+        $connectionString = \trim($connectionString);
 
-        $params = \explode(";", $connectionString);
-
-        if (\count($params) === 1) { // Attempt to explode on a space if no ';' are found.
-            $params = \explode(" ", $connectionString);
+        if ($connectionString === '') {
+            throw new \ValueError("Empty connection string");
         }
 
-        foreach ($params as $param) {
-            /** @psalm-suppress PossiblyInvalidArgument */
-            [$key, $value] = \array_map(\trim(...), \explode("=", $param, 2) + [1 => ""]);
-            if ($key === '') {
-                throw new \ValueError("Empty key name in connection string");
+        if (\preg_match_all(
+            pattern: self::KEY_VALUE_PAIR_REGEXP,
+            subject: $connectionString,
+            matches: $matches,
+            flags: \PREG_SET_ORDER | \PREG_UNMATCHED_AS_NULL,
+        ) === false) {
+            throw new \ValueError("Invalid connection string");
+        }
+
+        $offset = 0;
+        foreach ($matches as [$pair, $key, $value, $quote]) {
+            \assert($value !== null);
+
+            if ($quote !== null) {
+                $value = \stripslashes(\substr($value, 1, -1));
+
+                if ($value === '') {
+                    throw new \ValueError("Empty connection string value for key '{$key}'");
+                }
             }
 
-            $values[$keymap[$key] ?? $key] = $value;
+            \assert($key !== null && $key !== '');
+            $key = $keymap[$key] ?? $key;
+            if (\array_key_exists($key, $values)) {
+                throw new \ValueError("Duplicate connection string key '{$key}'");
+            }
+
+            $values[$key] = $value;
+
+            \assert($pair !== null);
+            $offset += \strlen($pair);
         }
 
-        if (\preg_match('/^(?<host>.+):(?<port>\d{1,5})$/', $values["host"] ?? "", $matches)) {
-            $values["host"] = $matches["host"];
-            $values["port"] = $matches["port"];
+        if ($offset !== \strlen($connectionString)) {
+            throw new \ValueError("Trailing characters in connection string");
+        }
+
+        if (\preg_match('[^(?<host>.+):(?<port>\d{1,5})$]', $values["host"] ?? "", $match)) {
+            $values["host"] = $match["host"];
+            $values["port"] = $match["port"];
         }
 
         return $values;
