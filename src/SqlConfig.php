@@ -13,7 +13,7 @@ abstract class SqlConfig
     ];
 
     private const KEY_VALUE_PAIR_REGEXP = <<<'REGEXP'
-        [\G\s*(\w+)=((['"])(?:\\(?:\\|\3)|(?!\3).)*+\3|[^ '";]\S*?)(?:\s+|;|$)]
+        [\G\s*(\w+)=((['"])(?:\\(?:\\|\3)|(?!\3).)*+\3|[^ '";](?:\\(?:\\| )|(?!\s+|;| ).)*+)(?:\s+|;|$)]
         REGEXP;
 
     private string $host;
@@ -62,6 +62,8 @@ abstract class SqlConfig
                 if ($value === '') {
                     throw new \ValueError("Empty connection string value for key '{$key}'");
                 }
+            } else {
+                $value = \str_replace('\\ ', ' ', $value);
             }
 
             \assert($key !== null && $key !== '');

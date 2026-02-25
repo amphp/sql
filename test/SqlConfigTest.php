@@ -65,6 +65,19 @@ class SqlConfigTest extends TestCase
         self::assertSame('test', $config->getDatabase());
     }
 
+    public function testEscapedSpace(): void
+    {
+        $config = $this->createConfigFromString(
+            <<<'CS'
+            host=localhost user=Test\ User database=Test\ Name
+            CS
+        );
+
+        self::assertSame('localhost', $config->getHost());
+        self::assertSame('Test User', $config->getUser());
+        self::assertSame('Test Name', $config->getDatabase());
+    }
+
     public function provideInvalidConnectionStrings(): array
     {
         return [
